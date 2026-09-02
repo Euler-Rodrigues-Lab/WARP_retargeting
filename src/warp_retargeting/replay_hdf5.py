@@ -232,7 +232,7 @@ def parse_args(argv=None):
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--max-frames", type=int, default=None)
     parser.add_argument(
-        "--human-overlay", action="store_true",
+        "--human-overlay-off", action="store_true",
         help="Overlay captured human skeleton capsules; press H to toggle",
     )
     parser.add_argument("--list-demos", action="store_true")
@@ -252,7 +252,7 @@ def main(argv=None) -> int:
         loop=args.loop,
         headless=args.headless,
         max_frames=args.max_frames,
-        human_overlay=args.human_overlay,
+        human_overlay=not args.human_overlay_off,
     )
     return 0
 
