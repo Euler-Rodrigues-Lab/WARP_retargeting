@@ -42,6 +42,15 @@ def _session(cfg, rate_hz: float):
             **kwargs,
         )
 
+    try:
+        import geo_kin  # noqa: F401 - fail early with an actionable message
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "SEW variants require the licensed geo_kin wheel. Install it into "
+            "this environment after `uv sync`, for example: "
+            "`uv pip install --python .venv/bin/python /path/to/geo_kin.whl`."
+        ) from exc
+
     sew = cfg.sew
     mode = sew.retargeting_mode
     if mode is None:

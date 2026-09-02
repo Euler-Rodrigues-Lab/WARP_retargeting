@@ -39,9 +39,11 @@ guardrails. The legacy CSV-to-HDF5 driver will be ported behind the
 
 Install the runtime and choose a frozen variant. `sew_mimic` requires the
 licensed `geo_kin` wheel; MINK runs through the public `geo_kin_core` fallback.
+Install the wheel after syncing because it is not a public project dependency:
 
 ```bash
 uv sync --extra runtime
+uv pip install --python .venv/bin/python /path/to/geo_kin-0.1.0-cp310-abi3-manylinux_2_35_x86_64.whl
 
 uv run warp-validate-offline --variant mink_eef --max-frames 120
 uv run warp-validate-offline --variant mink_te --max-frames 120
