@@ -11,6 +11,17 @@ defaults:
   enable_base_motion: true
 
 variants:
+  warp_seed:
+    solver: sew
+    description: "Canonical WARP-on-SEED paper demo: TCP + functional offset, JL off, direct base"
+    sew:
+      retargeting_mode: tcp
+      enable_collision_avoidance: false
+      enable_stability_clamp: false
+      enable_functional_retargeting: true
+      enable_functional_offset: true
+      enable_joint_limits: false
+      mobile_base_spring_damper: false
   ours:
     solver: sew
     description: "WARP: SEW + functional retargeting + functional offset + joint limits + spring-damper base"

@@ -24,6 +24,10 @@ POST_WARP_PATH_TERMS = {
 GENERATED_SUFFIXES = {
     ".hdf5", ".h5", ".csv", ".gz", ".mp4", ".mov", ".png", ".jpg", ".npz",
 }
+ALLOWLISTED_DATA = {
+    "fixtures/seed/washing_dishes_R_004__A299.csv.gz",
+    "fixtures/seed/washing_dishes_R_004__A299.frames.npz",
+}
 FORBIDDEN_CODE = (
     "from projects.", "import projects.", "GEO_TELEOP_MONOLITH",
     "/home/", "/coc/", "/media/",
@@ -56,7 +60,7 @@ def validate() -> list[str]:
             errors.append(f"protected solver path: {rel}")
         if any(term in lowered for term in POST_WARP_PATH_TERMS):
             errors.append(f"post-WARP path: {rel}")
-        if Path(rel).suffix.lower() in GENERATED_SUFFIXES:
+        if Path(rel).suffix.lower() in GENERATED_SUFFIXES and rel not in ALLOWLISTED_DATA:
             errors.append(f"generated/data file is not allowlisted: {rel}")
         path = ROOT / rel
         if (

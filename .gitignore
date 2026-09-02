@@ -19,3 +19,7 @@ build/
 outputs/
 artifacts/
 results/
+
+# One frozen paper fixture, in raw SEED and solver-neutral cache forms.
+!fixtures/seed/washing_dishes_R_004__A299.csv.gz
+!fixtures/seed/washing_dishes_R_004__A299.frames.npz

@@ -16,10 +16,16 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
-runtime = ["rby1-teleop", "geo-kin-core[fallback]"]
+runtime = ["rby1-teleop", "geo-kin-core[fallback]", "h5py>=3.11"]
+policy = ["websockets>=14", "msgpack-numpy>=0.4.8"]
 
 [project.scripts]
 warp-validate-offline = "warp_retargeting.offline_validate:main"
+warp-replay-hdf5 = "warp_retargeting.replay_hdf5:main"
+warp-rollout-policy = "warp_retargeting.policy_rollout:main"
+warp-transcode-csv = "warp_retargeting.transcode_csv:main"
+warp-metrics = "warp_retargeting.metrics:main"
+warp-build-dataset = "warp_retargeting.build_dataset:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
