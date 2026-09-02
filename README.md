@@ -3,6 +3,9 @@
 Reproducibility and experiment tooling for **WARP** (Whole-Body Retargeting
 for Learning from Offline Human Demonstrations).
 
+**[Project website](https://warp-retargeting.github.io/)** ·
+**[Paper](https://arxiv.org/abs/2606.29940)**
+
 This repository is intentionally limited to the code path frozen for the WARP
 submission on 2026-05-30. Work started after that boundary—including
 Aria/EgoPoser perception, partial-mocap reconstruction, reviewer-response
@@ -35,3 +38,17 @@ guardrails. The legacy CSV-to-HDF5 driver will be ported behind the
 ## Author
 
 `kczttm`
+
+## Citation
+
+If you use WARP, please cite the paper using the format published on the
+[project website](https://warp-retargeting.github.io/):
+
+```bibtex
+@article{chen2026warp,
+  title   = {WARP: Whole-Body Retargeting for Learning from Offline Human Demonstrations},
+  author  = {Chen, Zhenyang and Kong, Chuizheng and Zhang, Chuye and Yang, Yuanshao and Zhu, Lawrence Y. and Kousik, Shreyas and Xu, Danfei},
+  journal = {arXiv preprint arXiv:2606.29940},
+  year    = {2026}
+}
+```
