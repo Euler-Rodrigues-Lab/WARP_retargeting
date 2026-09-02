@@ -25,3 +25,12 @@ def test_sew_mimic_disables_functional_retargeting(tmp_path):
     assert cfg.sew.enable_functional_retargeting is False
     assert cfg.sew.enable_functional_offset is False
     assert cfg.sew.mobile_base_spring_damper is False
+
+
+def test_c_sew_explicitly_uses_tcp_without_functional_offset(tmp_path):
+    cfg, description = load_variant("c_sew", input_folder=str(tmp_path))
+    assert "C-SEW" in description
+    assert cfg.solver == "sew"
+    assert cfg.sew.retargeting_mode == "tcp"
+    assert cfg.sew.enable_functional_retargeting is True
+    assert cfg.sew.enable_functional_offset is False

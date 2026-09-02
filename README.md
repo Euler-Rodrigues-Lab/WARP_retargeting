@@ -45,6 +45,7 @@ uv sync --extra runtime
 
 uv run warp-validate-offline --variant mink_eef --max-frames 120
 uv run warp-validate-offline --variant mink_te --max-frames 120
+uv run warp-validate-offline --variant c_sew --max-frames 120
 uv run warp-validate-offline --variant sew_mimic --max-frames 120
 ```
 

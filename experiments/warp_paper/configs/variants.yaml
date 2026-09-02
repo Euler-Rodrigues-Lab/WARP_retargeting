@@ -30,8 +30,9 @@ variants:
       mobile_base_adaptive_threshold: 0.15
   c_sew:
     solver: sew
-    description: "Compositional SEW baseline: WARP without functional offset"
+    description: "C-SEW baseline: TCP retargeting without functional offset"
     sew:
+      retargeting_mode: tcp
       enable_collision_avoidance: false
       enable_stability_clamp: false
       enable_functional_retargeting: true
