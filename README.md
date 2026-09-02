@@ -35,6 +35,24 @@ The current milestone provides the frozen configuration surface and repository
 guardrails. The legacy CSV-to-HDF5 driver will be ported behind the
 `rby1_teleop` API without copying solver or robot implementation files.
 
+## Offline validation
+
+Install the runtime and choose a frozen variant. `sew_mimic` requires the
+licensed `geo_kin` wheel; MINK runs through the public `geo_kin_core` fallback.
+
+```bash
+uv sync --extra runtime
+
+uv run warp-validate-offline --variant mink_eef --max-frames 120
+uv run warp-validate-offline --variant mink_te --max-frames 120
+uv run warp-validate-offline --variant sew_mimic --max-frames 120
+```
+
+Each run writes `summary.json` and `trajectory.npz` under
+`outputs/offline_validation/<variant>/`. These are smoke/parity artifacts, not
+the paper's aggregate metrics. MINK hand outputs remain unsolved: the paper
+baseline reused protected analytical XHand IK, which is deliberately not copied
+into this repository.
 
 ## Citation
 

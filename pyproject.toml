@@ -16,7 +16,10 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
-runtime = ["rby1-teleop"]
+runtime = ["rby1-teleop", "geo-kin-core[fallback]"]
+
+[project.scripts]
+warp-validate-offline = "warp_retargeting.offline_validate:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

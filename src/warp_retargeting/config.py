@@ -158,15 +158,8 @@ def _resolve_io(cfg: RetargetConfig, anchor: Path) -> RetargetConfig:
     ))
 
 
-def load_config(path: str | Path) -> RetargetConfig:
-    """Load, strictly validate, and path-resolve a frozen run config."""
-    config_path = Path(path)
-    if not config_path.is_file():
-        raise ConfigError(f"config file not found: {config_path}")
-    try:
-        raw = yaml.safe_load(config_path.read_text())
-    except yaml.YAMLError as exc:
-        raise ConfigError(f"failed to parse YAML {config_path}: {exc}") from exc
+def config_from_mapping(raw: dict[str, Any], anchor: str | Path | None = None) -> RetargetConfig:
+    """Strictly validate a config mapping and optionally resolve its IO paths."""
     if not isinstance(raw, dict):
         raise ConfigError("top-level YAML must be a mapping")
     _check_keys(raw, RetargetConfig, "top level")
@@ -186,7 +179,19 @@ def load_config(path: str | Path) -> RetargetConfig:
         raise ConfigError(f"invalid sew.retargeting_mode: {cfg.sew.retargeting_mode!r}")
     if cfg.mink and cfg.mink.wrist_target_mode not in ("palm", "wrist"):
         raise ConfigError(f"invalid mink.wrist_target_mode: {cfg.mink.wrist_target_mode!r}")
-    return _resolve_io(cfg, config_path.parent.resolve())
+    return _resolve_io(cfg, Path(anchor).resolve()) if anchor is not None else cfg
+
+
+def load_config(path: str | Path) -> RetargetConfig:
+    """Load, strictly validate, and path-resolve a frozen run config."""
+    config_path = Path(path)
+    if not config_path.is_file():
+        raise ConfigError(f"config file not found: {config_path}")
+    try:
+        raw = yaml.safe_load(config_path.read_text())
+    except yaml.YAMLError as exc:
+        raise ConfigError(f"failed to parse YAML {config_path}: {exc}") from exc
+    return config_from_mapping(raw, config_path.parent)
 
 
 def dump_run_config(cfg: RetargetConfig, path: str | Path) -> None:

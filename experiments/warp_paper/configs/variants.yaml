@@ -58,3 +58,29 @@ variants:
       enable_functional_offset: false
       enable_joint_limits: true
       mobile_base_spring_damper: false
+  mink_eef:
+    solver: mink
+    description: "MINK-EF: palm end-effector position and orientation only"
+    mink:
+      hand_position_cost: 1.0
+      hand_orientation_cost: 1.0
+      torso_orientation_cost: 0.0
+      elbow_angle_cost: 0.0
+      head_orientation_cost: 0.0
+      upper_arm_direction_cost: 0.0
+      lower_arm_direction_cost: 0.0
+      wrist_target_mode: palm
+      enable_stability_clamp: false
+  mink_te:
+    solver: mink
+    description: "MINK-TE: end-effector plus torso and elbow position tasks"
+    mink:
+      hand_position_cost: 1.0
+      hand_orientation_cost: 1.0
+      torso_orientation_cost: 0.5
+      elbow_angle_cost: 0.5
+      head_orientation_cost: 0.0
+      upper_arm_direction_cost: 0.0
+      lower_arm_direction_cost: 0.0
+      wrist_target_mode: palm
+      enable_stability_clamp: false
