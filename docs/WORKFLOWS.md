@@ -12,7 +12,7 @@ The target is the RBY1 portion of
 | MINK-EF / MINK-TE conversion | same commands with `mink_eef` / `mink_te` | Public `geo_kin_core` fallback; arm/body path complete, protected XHand IK intentionally absent |
 | Robomimic HDF5 output | `robot_data.hdf5` from either converter | Original 49D/38D/25D/14D action groups and 26D robot state layout; policy rollout also accepts the frozen 44D arms/hands/torso layout |
 | Multi-demo conversion | `warp-build-dataset` | One `data/demo_N` group per input, plus per-demo summaries and caches |
-| MuJoCo data replay | `warp-replay-hdf5` | Recorded proprio or command replay; interactive and headless; kinematic by design |
+| MuJoCo data replay | `warp-replay-hdf5` | Recorded proprio or command replay; interactive and headless; optional captured-human capsule overlay; kinematic by design |
 | Metric execution | `warp-metrics` | Portable local subset: EEF position/orientation, torso orientation, joint velocity/jerk, self-collision |
 | Multi-demo metric aggregation | `warp-metrics --all-demos` | Macro per-demo summary; does not claim the paper repository's global NNAD/PCAV pass |
 | Ground-truth policy replay | `warp-rollout-policy --use-gt-action` | Verified on canonical and supplied sample HDF5s |

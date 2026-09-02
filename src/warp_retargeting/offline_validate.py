@@ -177,6 +177,7 @@ def run_validation(
     human_left_sew, human_right_sew = [], []
     human_upper_rotation, human_upper_position = [], []
     left_mcp_centroid, right_mcp_centroid = [], []
+    human_skeleton_positions = []
     solve_ms, contacts = [], []
     for index in range(count):
         frame = stream[index]
@@ -194,6 +195,11 @@ def run_validation(
         right_mcp_centroid.append(_optional_array(
             frame.extras.get("right_finger_mcp_centroid"), (3,)
         ))
+        if stream.skeleton_names is not None:
+            human_skeleton_positions.append(_optional_array(
+                None if frame.skeleton is None else frame.skeleton["positions"],
+                (len(stream.skeleton_names), 3),
+            ))
         started = time.perf_counter()
         out = session.solve(
             frame,
@@ -266,6 +272,12 @@ def run_validation(
         "solve_ms": np.asarray(solve_ms),
         "self_contacts": np.asarray(contacts, dtype=np.int64),
     }
+    if human_skeleton_positions:
+        arrays["human_skeleton_positions"] = np.stack(human_skeleton_positions)
+        arrays["human_skeleton_names"] = np.asarray(stream.skeleton_names).astype(str)
+        arrays["human_skeleton_parents"] = np.asarray(
+            stream.skeleton_parents, dtype=np.int64
+        )
     arrays["base_delta"] = _base_deltas(
         arrays["base_position"], arrays["base_rotation"]
     )

@@ -152,6 +152,25 @@ def write_episode(
         ):
             if key in arrays:
                 targets.create_dataset(key, data=np.asarray(arrays[key], dtype=np.float64))
+        if "human_skeleton_positions" in arrays:
+            positions = np.asarray(arrays["human_skeleton_positions"], dtype=np.float64)
+            names = np.asarray(arrays["human_skeleton_names"]).reshape(-1)
+            parents = np.asarray(arrays["human_skeleton_parents"], dtype=np.int64).reshape(-1)
+            if positions.ndim != 3 or positions.shape[0] != n or positions.shape[2] != 3:
+                raise ValueError(
+                    "human_skeleton_positions must have shape (frames, bones, 3), "
+                    f"got {positions.shape}"
+                )
+            if positions.shape[1] != len(names) or len(names) != len(parents):
+                raise ValueError(
+                    "human skeleton positions, names, and parents disagree on bone count"
+                )
+            targets.create_dataset("human_skeleton_positions", data=positions)
+            targets.create_dataset(
+                "human_skeleton_names",
+                data=np.asarray(names, dtype=h5py.string_dtype(encoding="utf-8")),
+            )
+            targets.create_dataset("human_skeleton_parents", data=parents)
 
         diagnostics = demo.create_group("diagnostics")
         diagnostics.create_dataset("solve_time_s", data=np.asarray(arrays["solve_ms"], dtype=np.float64) / 1000.0)
@@ -186,4 +205,22 @@ def load_episode(path: str | Path, demo_key: str = "demo_0") -> dict[str, np.nda
         if "transforms" in demo:
             result["base_position"] = demo["transforms"]["p_world_base"][:]
             result["base_rotation"] = demo["transforms"]["R_world_base"][:]
+            if "p_mocap_world" in demo["transforms"]:
+                result["mocap_world_position"] = demo["transforms"]["p_mocap_world"][:]
+            if "R_mocap_world" in demo["transforms"]:
+                result["mocap_world_rotation"] = demo["transforms"]["R_mocap_world"][:]
+        if "targets" in demo:
+            targets = demo["targets"]
+            for key in (
+                "human_left_sew", "human_right_sew", "human_upper_rotation",
+                "human_upper_position", "human_skeleton_positions",
+                "human_skeleton_parents",
+            ):
+                if key in targets:
+                    result[key] = targets[key][:]
+            if "human_skeleton_names" in targets:
+                result["human_skeleton_names"] = np.asarray([
+                    value.decode("utf-8") if isinstance(value, bytes) else str(value)
+                    for value in targets["human_skeleton_names"][:]
+                ])
         return result

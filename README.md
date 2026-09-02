@@ -64,7 +64,8 @@ uv run warp-validate-offline \
   --frames fixtures/seed/washing_dishes_R_004__A299.frames.npz \
   --output-dir outputs/warp_seed
 
-uv run warp-replay-hdf5 outputs/warp_seed/robot_data.hdf5 --loop
+uv run warp-replay-hdf5 \
+  outputs/warp_seed/robot_data.hdf5 --human-overlay --loop
 uv run warp-metrics outputs/warp_seed/robot_data.hdf5
 uv run warp-rollout-policy \
   --dataset outputs/warp_seed/robot_data.hdf5 \
@@ -74,7 +75,13 @@ uv run warp-rollout-policy \
 Replay is deliberately kinematic, matching the frozen policy-visualization
 script; it does not claim to evaluate MuJoCo dynamics. Use `--mode action` to
 select recorded commands rather than recorded proprio, `--headless` for CI,
-and `--list-demos` to inspect a multi-demo file.
+and `--list-demos` to inspect a multi-demo file. `--human-overlay` draws the
+captured 70-bone SEED pose as translucent capsules beside the robot; press `H`
+while replaying to toggle it. Older generated HDF5 files fall back to a coarse
+upper-body overlay from their stored SEW targets. Regenerate them to preserve
+the complete captured body and finger skeleton. Replay delegates both forms to
+the shared `geo_kin_core.viz.HumanCapsuleViz` implementation, which was ported
+from `SEW-Geometric-Teleop`; WARP does not define a second human model.
 
 ## More SEED recordings
 
