@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+dist/
+build/
+
+# Generated experiment data. No broad exception: fixtures must be allowlisted.
+*.hdf5
+*.h5
+*.csv
+*.csv.gz
+*.mp4
+*.mov
+*.png
+*.jpg
+*.npz
+outputs/
+artifacts/
+results/

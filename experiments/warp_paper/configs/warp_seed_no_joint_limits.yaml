@@ -1,0 +1,29 @@
+# Frozen single-trajectory paper configuration.
+solver: sew
+io:
+  input_folder: ../input
+  output_folder: ../output
+  hdf5_name: robot_data.hdf5
+data:
+  csv_reading_freq: 30.0
+  no_filter: true
+  no_aria_black_image: false
+  task_id: null
+video:
+  no_video: true
+  per_demo_video: false
+enable_base_motion: true
+sew:
+  enable_collision_avoidance: false
+  enable_stability_clamp: false
+  enable_functional_retargeting: true
+  enable_functional_offset: true
+  enable_joint_limits: false
+  mobile_base_spring_damper: false
+  mobile_base_deadband: 0.05
+  mobile_base_yaw_deadband: 0.1
+  mobile_base_natural_freq: 1.5
+  mobile_base_damping_ratio: 1.0
+  mobile_base_adaptive_freq: false
+  mobile_base_freq_min: 0.3
+  mobile_base_adaptive_threshold: 0.15
