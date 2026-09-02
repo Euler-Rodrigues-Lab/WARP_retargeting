@@ -35,9 +35,6 @@ The current milestone provides the frozen configuration surface and repository
 guardrails. The legacy CSV-to-HDF5 driver will be ported behind the
 `rby1_teleop` API without copying solver or robot implementation files.
 
-## Author
-
-`kczttm`
 
 ## Citation
 
