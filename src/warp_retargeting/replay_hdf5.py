@@ -116,7 +116,7 @@ def replay(
     loop: bool = False,
     headless: bool = False,
     max_frames: int | None = None,
-    human_overlay: bool = False,
+    human_overlay: bool = True,
 ) -> int:
     episode = load_episode(hdf5_file, demo_key)
     model = mujoco.MjModel.from_xml_path(str(XML_RBY1_XHAND))
@@ -127,9 +127,9 @@ def replay(
     fps = float(episode["fps"])
     human_source = _human_source(episode)
     if human_overlay and human_source is None:
-        raise ValueError(
-            f"{hdf5_file}:{demo_key} contains no human targets; regenerate it "
-            "with warp-validate-offline"
+        print(
+            f"Warning: {hdf5_file}:{demo_key} contains no human targets; "
+            "replaying the robot without an overlay"
         )
     keys = _Keys(show_human=human_overlay)
     applied = 0
@@ -232,8 +232,8 @@ def parse_args(argv=None):
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--max-frames", type=int, default=None)
     parser.add_argument(
-        "--human-overlay-off", action="store_true",
-        help="Overlay captured human skeleton capsules; press H to toggle",
+        "--human-overlay", action=argparse.BooleanOptionalAction, default=True,
+        help="Overlay captured human skeleton capsules (default: on; press H to toggle)",
     )
     parser.add_argument("--list-demos", action="store_true")
     return parser.parse_args(argv)
@@ -252,7 +252,7 @@ def main(argv=None) -> int:
         loop=args.loop,
         headless=args.headless,
         max_frames=args.max_frames,
-        human_overlay=not args.human_overlay_off,
+        human_overlay=args.human_overlay,
     )
     return 0
 

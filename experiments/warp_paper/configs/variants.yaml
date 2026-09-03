@@ -11,9 +11,9 @@ defaults:
   enable_base_motion: true
 
 variants:
-  warp_seed:
+  warp_no_joint_limits:
     solver: sew
-    description: "Canonical WARP-on-SEED paper demo: TCP + functional offset, JL off, direct base"
+    description: "Archival WARP example preset: TCP + functional offset, joint limits off, direct base"
     sew:
       retargeting_mode: tcp
       enable_collision_avoidance: false
@@ -22,7 +22,7 @@ variants:
       enable_functional_offset: true
       enable_joint_limits: false
       mobile_base_spring_damper: false
-  ours:
+  warp:
     solver: sew
     description: "WARP: SEW + functional retargeting + functional offset + joint limits + spring-damper base"
     sew:
@@ -50,7 +50,7 @@ variants:
       enable_functional_offset: false
       enable_joint_limits: true
       mobile_base_spring_damper: true
-  ours_no_spring:
+  warp_no_spring:
     solver: sew
     description: "WARP without spring-damper base"
     sew:

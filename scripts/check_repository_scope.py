@@ -27,6 +27,11 @@ GENERATED_SUFFIXES = {
 ALLOWLISTED_DATA = {
     "fixtures/seed/washing_dishes_R_004__A299.csv.gz",
     "fixtures/seed/washing_dishes_R_004__A299.frames.npz",
+    "fixtures/retargeted/washing_dishes_warp.hdf5",
+    "fixtures/retargeted/washing_dishes_warp_no_joint_limits.hdf5",
+    "fixtures/retargeted/washing_dishes_c_sew.hdf5",
+    "fixtures/retargeted/washing_dishes_warp_no_spring.hdf5",
+    "fixtures/retargeted/washing_dishes_sew_mimic.hdf5",
 }
 FORBIDDEN_CODE = (
     "from projects.", "import projects.", "GEO_TELEOP_MONOLITH",

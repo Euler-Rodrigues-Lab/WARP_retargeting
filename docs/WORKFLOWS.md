@@ -5,6 +5,11 @@ The target is the RBY1 portion of
 `proj_func_retarget/baseline-metric-study`. The later curated commit
 `80f92b6` is a map of that work, not a scope expansion.
 
+Public naming uses `warp` for the method called `ours` in the frozen experiment
+scripts. The old `scripts/warp_seed/` name described a curated WARP-on-SEED
+code/data bundle, not a distinct algorithm; its no-joint-limit, direct-base
+example is exposed explicitly as `warp_no_joint_limits`.
+
 | Frozen operation | WARP Retargeting entry point | Status |
 |---|---|---|
 | SEED bone CSV sampling at 30 Hz | `warp-transcode-csv` | Compatible; temporarily needs the frozen monolith's capture/device environment |
@@ -13,6 +18,7 @@ The target is the RBY1 portion of
 | Robomimic HDF5 output | `robot_data.hdf5` from either converter | Original 49D/38D/25D/14D action groups and 26D robot state layout; policy rollout also accepts the frozen 44D arms/hands/torso layout |
 | Multi-demo conversion | `warp-build-dataset` | One `data/demo_N` group per input, plus per-demo summaries and caches |
 | MuJoCo data replay | `warp-replay-hdf5` | Recorded proprio or command replay; interactive and headless; optional captured-human capsule overlay; kinematic by design |
+| Canonical licensed-mode replay | `fixtures/retargeted/*.hdf5` | Precomputed derived joint targets for all five SEW variants; replay needs no licensed wheel |
 | Metric execution | `warp-metrics` | Portable local subset: EEF position/orientation, torso orientation, joint velocity/jerk, self-collision |
 | Multi-demo metric aggregation | `warp-metrics --all-demos` | Macro per-demo summary; does not claim the paper repository's global NNAD/PCAV pass |
 | Ground-truth policy replay | `warp-rollout-policy --use-gt-action` | Verified on canonical and supplied sample HDF5s |
@@ -39,3 +45,9 @@ protected-source-free workflow and validation surface.
 This repository does not contain the paper's separate aggregation, cluster
 submission, and figure-production repository. In particular, global NNAD and
 PCAV must not be computed independently per shard and averaged.
+
+The committed canonical HDF5 files are convenience replay artifacts, not a
+replacement for the licensed retargeter. They contain generated joint angles,
+poses, diagnostics, and human targets but no protected solver implementation,
+license, or signing key. New recordings still require the licensed backend for
+the five SEW variants.

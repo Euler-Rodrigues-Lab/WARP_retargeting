@@ -38,8 +38,9 @@ uv pip install --python .venv/bin/python /path/to/geo_kin.whl
 
 ## Offline validation
 
-Choose a frozen variant. `warp_seed`, `ours`, `c_sew`, and `sew_mimic` require
-the licensed wheel; MINK runs through the public `geo_kin_core` fallback.
+Choose a frozen variant. `warp`, `warp_no_joint_limits`, `warp_no_spring`,
+`c_sew`, and `sew_mimic` require the licensed wheel; MINK runs through the
+public `geo_kin_core` fallback.
 
 ```bash
 uv run warp-validate-offline --variant mink_eef --max-frames 120
@@ -60,28 +61,49 @@ frame, 30 Hz cache. This reproduces the submitted WARP converter settings:
 
 ```bash
 uv run warp-validate-offline \
-  --variant warp_seed \
+  --variant warp \
   --frames fixtures/seed/washing_dishes_R_004__A299.frames.npz \
-  --output-dir outputs/warp_seed
+  --output-dir outputs/warp
 
-uv run warp-replay-hdf5 \
-  outputs/warp_seed/robot_data.hdf5 --human-overlay --loop
-uv run warp-metrics outputs/warp_seed/robot_data.hdf5
+uv run warp-replay-hdf5 outputs/warp/robot_data.hdf5 --loop
+uv run warp-metrics outputs/warp/robot_data.hdf5
 uv run warp-rollout-policy \
-  --dataset outputs/warp_seed/robot_data.hdf5 \
+  --dataset outputs/warp/robot_data.hdf5 \
   --use-gt-action
 ```
 
 Replay is deliberately kinematic, matching the frozen policy-visualization
 script; it does not claim to evaluate MuJoCo dynamics. Use `--mode action` to
 select recorded commands rather than recorded proprio, `--headless` for CI,
-and `--list-demos` to inspect a multi-demo file. `--human-overlay` draws the
-captured 70-bone SEED pose as translucent capsules beside the robot; press `H`
-while replaying to toggle it. Older generated HDF5 files fall back to a coarse
-upper-body overlay from their stored SEW targets. Regenerate them to preserve
-the complete captured body and finger skeleton. Replay delegates both forms to
-the shared `geo_kin_core.viz.HumanCapsuleViz` implementation, which was ported
-from `SEW-Geometric-Teleop`; WARP does not define a second human model.
+and `--list-demos` to inspect a multi-demo file. The captured 70-bone SEED pose
+is drawn as translucent capsules by default; press `H` while replaying to
+toggle it or pass `--no-human-overlay` to start without it. Older generated
+HDF5 files fall back to a coarse upper-body overlay from their stored SEW
+targets. Regenerate them to preserve the complete captured body and finger
+skeleton. Replay delegates both forms to the shared
+`geo_kin_core.viz.HumanCapsuleViz` implementation, which was ported from
+`SEW-Geometric-Teleop`; WARP does not define a second human model.
+
+## License-free canonical replays
+
+The repository includes precomputed HDF5 trajectories for every frozen mode
+that normally requires the licensed `geo_kin` backend. These are derived robot
+joint targets and replay metadata only; they contain no solver implementation
+or license material. A fresh clone can replay them with the public runtime:
+
+```bash
+uv sync --extra runtime
+
+uv run warp-replay-hdf5 \
+  fixtures/retargeted/washing_dishes_warp.hdf5 --loop
+uv run warp-replay-hdf5 \
+  fixtures/retargeted/washing_dishes_c_sew.hdf5 --loop
+```
+
+Replace the filename suffix with `warp_no_spring`, `warp_no_joint_limits`, or
+`sew_mimic` to compare another licensed configuration. The licensed wheel is
+required only to retarget a new frame stream or regenerate these frozen
+outputs, not to replay them.
 
 ## More SEED recordings
 

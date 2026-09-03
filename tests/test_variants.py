@@ -2,7 +2,10 @@ from warp_retargeting.variants import load_variant, variant_names
 
 
 def test_expected_frozen_variants_are_registered():
-    assert {"warp_seed", "ours", "sew_mimic", "mink_eef", "mink_te"} <= set(variant_names())
+    assert {
+        "warp", "warp_no_joint_limits", "warp_no_spring", "sew_mimic",
+        "mink_eef", "mink_te",
+    } <= set(variant_names())
 
 
 def test_mink_eef_materializes_frozen_costs(tmp_path):
@@ -37,7 +40,7 @@ def test_c_sew_explicitly_uses_tcp_without_functional_offset(tmp_path):
 
 
 def test_canonical_seed_variant_matches_frozen_example(tmp_path):
-    cfg, _ = load_variant("warp_seed", input_folder=str(tmp_path))
+    cfg, _ = load_variant("warp_no_joint_limits", input_folder=str(tmp_path))
     assert cfg.sew.retargeting_mode == "tcp"
     assert cfg.sew.enable_functional_offset is True
     assert cfg.sew.enable_joint_limits is False
