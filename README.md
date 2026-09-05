@@ -21,6 +21,9 @@ licensed `geo_kin` backend used by `rby1_teleop`.
 ## Bootstrap
 
 ```bash
+mkdir -p Euler-Rodrigues-Lab
+cd Euler-Rodrigues-Lab
+git clone https://github.com/Euler-Rodrigues-Lab/geo_kin_core.git
 git clone --recurse-submodules https://github.com/Euler-Rodrigues-Lab/WARP_retargeting.git
 cd WARP_retargeting
 uv sync --extra runtime --extra test
@@ -29,12 +32,17 @@ uv run pytest
 ```
 
 This installs the pinned `external/rby1_teleop` checkout, HDF5 support, and the
-public MINK fallback. Install the licensed `geo_kin` wheel built from
-`geo_kin@9dbd4ed` or newer after syncing when WARP/C-SEW parity is required:
+public MINK fallback. Licensed wheels and licenses are registered once through
+the sibling `geo_kin_core` checkout. Link the registered RBY1/XHand build into
+this environment after syncing when WARP/C-SEW parity is required:
 
 ```bash
-uv pip install --python .venv/bin/python /path/to/geo_kin.whl
+uv run geo-kin-provision install
 ```
+
+See the `geo_kin_core` README for the one-time `geo-kin-provision register`
+command. Private wheels and licenses remain in user-wide storage outside both
+repositories.
 
 ## Offline validation
 
@@ -142,7 +150,7 @@ msgpack/websocket policy interface, add the policy dependencies:
 
 ```bash
 uv sync --extra runtime --extra policy
-uv pip install --python .venv/bin/python /path/to/geo_kin.whl
+uv run geo-kin-provision install
 
 uv run warp-rollout-policy \
   --dataset /path/to/robot_data.hdf5 \

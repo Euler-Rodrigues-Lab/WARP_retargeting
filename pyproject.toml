@@ -32,7 +32,10 @@ where = ["src"]
 
 [tool.uv.sources]
 rby1-teleop = { path = "external/rby1_teleop", editable = true }
-geo-kin-core = { git = "https://github.com/Euler-Rodrigues-Lab/geo_kin_core.git" }
+geo-kin-core = { path = "../geo_kin_core", editable = true }
+
+[tool.geo-kin]
+product = "rby1-xhand"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

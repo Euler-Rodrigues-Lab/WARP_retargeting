@@ -110,9 +110,10 @@ wheels = [
 [[package]]
 name = "geo-kin-core"
 version = "0.1.0"
-source = { git = "https://github.com/Euler-Rodrigues-Lab/geo_kin_core.git#79f6c4f47e25c8dd92ad50a3b1b08c9fe6224aaf" }
+source = { editable = "../geo_kin_core" }
 dependencies = [
     { name = "numpy" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
 ]
 
 [package.optional-dependencies]
@@ -120,6 +121,18 @@ fallback = [
     { name = "mink" },
     { name = "quadprog" },
     { name = "scipy" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mink", marker = "extra == 'fallback'" },
+    { name = "mujoco", marker = "extra == 'viz'" },
+    { name = "numpy" },
+    { name = "pin", marker = "extra == 'spec-tools'", specifier = ">=4.0.0" },
+    { name = "quadprog", marker = "extra == 'fallback'" },
+    { name = "scipy", marker = "extra == 'fallback'" },
+    { name = "scipy", marker = "extra == 'spec-tools'" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2" },
 ]
 
 [[package]]
@@ -810,7 +823,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "geo-kin-core", extras = ["fallback"], marker = "extra == 'runtime'", git = "https://github.com/Euler-Rodrigues-Lab/geo_kin_core.git" },
+    { name = "geo-kin-core", extras = ["fallback"], marker = "extra == 'runtime'", editable = "../geo_kin_core" },
     { name = "h5py", marker = "extra == 'runtime'", specifier = ">=3.11" },
     { name = "msgpack-numpy", marker = "extra == 'policy'", specifier = ">=0.4.8" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8" },
