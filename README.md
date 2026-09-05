@@ -21,9 +21,6 @@ licensed `geo_kin` backend used by `rby1_teleop`.
 ## Bootstrap
 
 ```bash
-mkdir -p Euler-Rodrigues-Lab
-cd Euler-Rodrigues-Lab
-git clone https://github.com/Euler-Rodrigues-Lab/geo_kin_core.git
 git clone --recurse-submodules https://github.com/Euler-Rodrigues-Lab/WARP_retargeting.git
 cd WARP_retargeting
 uv sync --extra runtime --extra test
@@ -31,18 +28,38 @@ python scripts/check_repository_scope.py
 uv run pytest
 ```
 
-This installs the pinned `external/rby1_teleop` checkout, HDF5 support, and the
-public MINK fallback. Licensed wheels and licenses are registered once through
-the sibling `geo_kin_core` checkout. Link the registered RBY1/XHand build into
-this environment after syncing when WARP/C-SEW parity is required:
+For an existing checkout, initialize both pinned public dependencies before
+syncing:
+
+```bash
+git pull
+git submodule update --init --recursive
+uv sync --extra runtime --extra test
+```
+
+The sync installs `external/rby1_teleop`, `external/geo_kin_core`, HDF5
+support, the public MINK fallback, and the `geo-kin-provision` command.
+Register a supplied licensed wheel and license once per user:
+
+```bash
+uv run geo-kin-provision register \
+  --product rby1-xhand \
+  --wheel /path/to/geo_kin-0.1.0-cp310-abi3-manylinux_2_35_x86_64.whl \
+  --license /path/to/geo_kin_license.toml \
+  --name my-rby1-license \
+  --activate
+```
+
+Then link that central build into this environment when WARP/C-SEW parity is
+required:
 
 ```bash
 uv run geo-kin-provision install
 ```
 
-See the `geo_kin_core` README for the one-time `geo-kin-provision register`
-command. Private wheels and licenses remain in user-wide storage outside both
-repositories.
+The wheel is unpacked once under `~/.local/share/geo-kin`; licenses live under
+`~/.config/geo-kin`. Private artifacts are never stored in this repository or
+its submodules.
 
 ## Offline validation
 

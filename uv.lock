@@ -110,7 +110,7 @@ wheels = [
 [[package]]
 name = "geo-kin-core"
 version = "0.1.0"
-source = { editable = "../geo_kin_core" }
+source = { editable = "external/geo_kin_core" }
 dependencies = [
     { name = "numpy" },
     { name = "tomli", marker = "python_full_version < '3.11'" },
@@ -823,7 +823,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "geo-kin-core", extras = ["fallback"], marker = "extra == 'runtime'", editable = "../geo_kin_core" },
+    { name = "geo-kin-core", extras = ["fallback"], marker = "extra == 'runtime'", editable = "external/geo_kin_core" },
     { name = "h5py", marker = "extra == 'runtime'", specifier = ">=3.11" },
     { name = "msgpack-numpy", marker = "extra == 'policy'", specifier = ">=0.4.8" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8" },

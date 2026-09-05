@@ -1,3 +1,6 @@
 [submodule "external/rby1_teleop"]
 	path = external/rby1_teleop
 	url = https://github.com/Euler-Rodrigues-Lab/rby1_teleop.git
+[submodule "external/geo_kin_core"]
+	path = external/geo_kin_core
+	url = https://github.com/Euler-Rodrigues-Lab/geo_kin_core.git
