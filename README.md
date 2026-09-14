@@ -132,17 +132,22 @@ outputs, not to replay them.
 
 ## More SEED recordings
 
-Raw `.csv`/`.csv.gz` recordings first become solver-neutral frame streams. The
-capture-side reader is temporarily sourced from a frozen
-`SEW-Geometric-Teleop` checkout, so run this command in an environment that has
-that checkout's device dependencies:
+Raw `.csv`/`.csv.gz` recordings become solver-neutral frame streams through
+`xrt-devices[recording]`. Install the pinned public device checkout before the
+runtime extra:
 
 ```bash
+python -m pip install -e 'external/XRT_devices[recording]'
+python -m pip install -e '.[runtime]'
 python -m warp_retargeting.transcode_csv \
   --csv-file /path/to/recording.csv.gz \
-  --output /path/to/recording.frames.npz \
-  --monolith-path /path/to/SEW-Geometric-Teleop
+  --output /path/to/recording.frames.npz
 ```
+
+The converter explicitly selects the archived upper-arm landmark body frame and
+retains the paper's 30 Hz sampling contract. The bundled 420-frame regression
+checks all frame arrays against the frozen fixture. Robot/controller/solver pins
+and paper configurations are unchanged.
 
 Build any number of frame streams into one original-format dataset:
 

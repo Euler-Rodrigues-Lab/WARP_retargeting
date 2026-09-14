@@ -12,7 +12,7 @@ example is exposed explicitly as `warp_no_joint_limits`.
 
 | Frozen operation | WARP Retargeting entry point | Status |
 |---|---|---|
-| SEED bone CSV sampling at 30 Hz | `warp-transcode-csv` | Compatible; temporarily needs the frozen monolith's capture/device environment |
+| SEED bone CSV sampling at 30 Hz | `warp-transcode-csv` | Public XRT_devices CSV reader with explicit frozen upper-arm body frame |
 | WARP, C-SEW, SEW-mimic conversion | `warp-validate-offline`, `warp-build-dataset` | Licensed `geo_kin` backend; protected solver source is absent |
 | MINK-EF / MINK-TE conversion | same commands with `mink_eef` / `mink_te` | Public `geo_kin_core` fallback; arm/body path complete, protected XHand IK intentionally absent |
 | Robomimic HDF5 output | `robot_data.hdf5` from either converter | Original 49D/38D/25D/14D action groups and 26D robot state layout; policy rollout also accepts the frozen 44D arms/hands/torso layout |

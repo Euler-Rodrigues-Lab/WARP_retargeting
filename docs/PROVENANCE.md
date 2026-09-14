@@ -27,3 +27,14 @@ The raw canonical fixture SHA-256 is
 `c2e18c60407a3362e659efec1421d587de25a652c3d00128020fe4db78907578`.
 The eight additional user-supplied recordings are external validation inputs
 only and are not repository artifacts.
+
+## Public input migration (2026-09-14)
+
+`transcode_csv.py` is maintained code, not an imported legacy implementation.
+CSV decoding now uses XRT_devices through its typed geo_kin_core adapter. The
+explicit `body_frame="upper_arms"` option reproduces the archived upper-arm
+landmark origin/lateral axis; the default live hip-axis convention is not used.
+The existing 420-frame fixture is the regression oracle (all numeric arrays at
+absolute tolerance 1e-12; only source/notes metadata may differ).
+No analytic source, robot controller, paper configuration, or generated fixture
+was imported or changed. The RBY1 gitlink remains at `973ed0d`.
