@@ -6,17 +6,6 @@ for Learning from Offline Human Demonstrations).
 **[Project website](https://warp-retargeting.github.io/)** ·
 **[Paper](https://arxiv.org/abs/2606.29940)**
 
-This repository is intentionally limited to the code path frozen for the WARP
-submission on 2026-05-30. Work started after that boundary—including
-Aria/EgoPoser perception, partial-mocap reconstruction, reviewer-response
-experiments, reviewer-era policy deployment changes, and later hardware
-development—belongs in separate repositories. The frozen downstream policy
-validation path is included.
-
-The RB-Y1 robot integration is pinned as a submodule at
-`external/rby1_teleop`. Protected closed-form kinematics are not stored here;
-they are accessed through the `geo_kin_core` session API and the separately
-licensed `geo_kin` backend used by `rby1_teleop`.
 
 ## Bootstrap
 
