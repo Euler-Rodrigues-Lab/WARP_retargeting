@@ -16,7 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
-runtime = ["rby1-teleop", "geo-kin-core[fallback]", "h5py>=3.11", "xrt-devices[recording]>=0.1.0"]
+runtime = ["rby1-teleop", "eurola-geo-kin-core[fallback]==0.1.2", "h5py>=3.11", "eurola-xrt-devices[recording]==0.1.2"]
 policy = ["websockets>=14", "msgpack-numpy>=0.4.8"]
 
 [project.scripts]
@@ -32,9 +32,7 @@ where = ["src"]
 
 [tool.uv.sources]
 rby1-teleop = { path = "external/rby1_teleop", editable = true }
-geo-kin-core = { path = "external/geo_kin_core", editable = true }
 
-xrt-devices = { path = "external/XRT_devices", editable = true }
 
 [tool.geo-kin]
 product = "rby1-xhand"

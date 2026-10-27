@@ -1,5 +1,28 @@
 # WARP Retargeting
 
+## Shared Python dependencies
+
+`geo_kin_core` and `xrt_devices` now come from versioned PyPI wheels, not Git
+submodules. The tested versions for this checkout are:
+
+```bash
+python -m pip install "eurola-geo-kin-core==0.1.2" "eurola-xrt-devices==0.1.2"
+```
+
+For an existing editable installation, run `python -m pip uninstall geo-kin-core xrt-devices`
+before installing the renamed packages, or use `uv sync` to reconcile the lockfile.
+
+Normal project installation (`uv sync` or `pip install` with the project and its
+local robot/simulator dependencies) selects these versions automatically. Imports
+and the `geo-kin-provision` command are unchanged. Other robot, simulator, and
+hardware submodules remain where needed; `--recurse-submodules` below is for those.
+The private `geo_kin` solver and its license are still supplied separately.
+
+For shared-library development, explicitly install matching source checkouts with
+`python -m pip install -e /path/to/geo_kin_core -e /path/to/XRT_devices` and run the
+venv's Python directly. A subsequent `uv sync` restores the released packages.
+
+
 Reproducibility and experiment tooling for **WARP** (Whole-Body Retargeting
 for Learning from Offline Human Demonstrations).
 
@@ -26,7 +49,7 @@ git submodule update --init --recursive
 uv sync --extra runtime --extra test
 ```
 
-The sync installs `external/rby1_teleop`, `external/geo_kin_core`, HDF5
+The sync installs `external/rby1_teleop`, `eurola-geo-kin-core`, HDF5
 support, the public MINK fallback, and the `geo-kin-provision` command.
 Register a supplied licensed wheel and license once per user:
 
@@ -122,11 +145,11 @@ outputs, not to replay them.
 ## More SEED recordings
 
 Raw `.csv`/`.csv.gz` recordings become solver-neutral frame streams through
-`xrt-devices[recording]`. Install the pinned public device checkout before the
+`eurola-xrt-devices[recording]`. Install the pinned PyPI package before the
 runtime extra:
 
 ```bash
-python -m pip install -e 'external/XRT_devices[recording]'
+python -m pip install "eurola-xrt-devices[recording]==0.1.2"
 python -m pip install -e '.[runtime]'
 python -m warp_retargeting.transcode_csv \
   --csv-file /path/to/recording.csv.gz \

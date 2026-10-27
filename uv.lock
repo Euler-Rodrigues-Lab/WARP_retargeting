@@ -92,11 +92,49 @@ epath = [
 ]
 
 [[package]]
+name = "eurola-geo-kin-core"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7e/b8/6fadbd06ab78ed4db7fffee6e2cd7f446a61df1350c80fa9c5e24ebec671/eurola_geo_kin_core-0.1.2.tar.gz", hash = "sha256:12c8f38c169960e676019ec378542df4e70ce4ebf372ccd617af95d9022b52b4", size = 51043 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d6/4f/c0b5f5df9eac1b12be44ce914c4e94d69b4f98c5c5b78d809a5be364a7b5/eurola_geo_kin_core-0.1.2-py3-none-any.whl", hash = "sha256:07799c25c52340ab43e43cf3f3744416624366d6fe189841791753a61be63781", size = 48523 },
+]
+
+[package.optional-dependencies]
+fallback = [
+    { name = "mink" },
+    { name = "quadprog" },
+    { name = "scipy" },
+]
+
+[[package]]
+name = "eurola-xrt-devices"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/41/a6/6e71c5e5dbf9efbab82463056077d1a75f4af2d319e1b1aa42b424eba9f1/eurola_xrt_devices-0.1.2.tar.gz", hash = "sha256:95564eed8da6321371caa7aed014a351380b28c0185bcbeb48a5378138d64d71", size = 124324 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/da/9f/7c4dd93236b006cf1e8f0e2470db332b80d03f9d60cd22bf92f7f6b5fcb6/eurola_xrt_devices-0.1.2-py3-none-any.whl", hash = "sha256:051fc75557cdd67a1bc1d96acd6b83ba5d3b66cf250b70018f5d3ecd2e5d446f", size = 92850 },
+]
+
+[package.optional-dependencies]
+recording = [
+    { name = "pandas" },
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371 }
 wheels = [
@@ -110,34 +148,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/00/78/f34251dadb8f3921264a1d9b8946f5e542014ee2614b285261b4e40e6775/fsspec-2026.7.0.tar.gz", hash = "sha256:c803c40f4cf860b49dea58ee3e1c33cb9c790520e233537e1340049f89b82a88", size = 317040 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fd/3c/6a2bf344106328fd04963664a60b9bb6496fc25df8e962fcdc1367285fb9/fsspec-2026.7.0-py3-none-any.whl", hash = "sha256:b57ddbafedfaef7018c1ecab32aa200a9d7ca26b77965f64e48b70061249d279", size = 206583 },
-]
-
-[[package]]
-name = "geo-kin-core"
-version = "0.1.0"
-source = { editable = "external/geo_kin_core" }
-dependencies = [
-    { name = "numpy" },
-    { name = "tomli", marker = "python_full_version < '3.11'" },
-]
-
-[package.optional-dependencies]
-fallback = [
-    { name = "mink" },
-    { name = "quadprog" },
-    { name = "scipy" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "mink", marker = "extra == 'fallback'" },
-    { name = "mujoco", marker = "extra == 'viz'" },
-    { name = "numpy" },
-    { name = "pin", marker = "extra == 'spec-tools'", specifier = ">=4.0.0" },
-    { name = "quadprog", marker = "extra == 'fallback'" },
-    { name = "scipy", marker = "extra == 'fallback'" },
-    { name = "scipy", marker = "extra == 'spec-tools'" },
-    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2" },
 ]
 
 [[package]]
@@ -752,7 +762,8 @@ name = "rby1-teleop"
 version = "0.1.0"
 source = { editable = "external/rby1_teleop" }
 dependencies = [
-    { name = "geo-kin-core" },
+    { name = "eurola-geo-kin-core" },
+    { name = "eurola-xrt-devices" },
     { name = "mujoco" },
     { name = "numpy" },
     { name = "scipy" },
@@ -760,10 +771,17 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "geo-kin-core" },
+    { name = "eurola-geo-kin-core", specifier = "==0.1.2" },
+    { name = "eurola-geo-kin-core", extras = ["fallback"], marker = "extra == 'devices'", specifier = "==0.1.2" },
+    { name = "eurola-geo-kin-core", extras = ["fallback"], marker = "extra == 'mediapipe'", specifier = "==0.1.2" },
+    { name = "eurola-xrt-devices", specifier = "==0.1.2" },
+    { name = "eurola-xrt-devices", extras = ["mediapipe"], marker = "extra == 'mediapipe'", specifier = "==0.1.2" },
+    { name = "eurola-xrt-devices", extras = ["xr", "recording"], marker = "extra == 'devices'", specifier = "==0.1.2" },
     { name = "mujoco" },
     { name = "numpy" },
+    { name = "pyserial", marker = "extra == 'hw'", specifier = ">=3.5" },
     { name = "pytest", marker = "extra == 'test'" },
+    { name = "rby1-sdk", marker = "extra == 'hw'", specifier = ">=0.9,<0.10" },
     { name = "scipy" },
 ]
 
@@ -918,10 +936,10 @@ policy = [
     { name = "websockets" },
 ]
 runtime = [
-    { name = "geo-kin-core", extra = ["fallback"] },
+    { name = "eurola-geo-kin-core", extra = ["fallback"] },
+    { name = "eurola-xrt-devices", extra = ["recording"] },
     { name = "h5py" },
     { name = "rby1-teleop" },
-    { name = "xrt-devices", extra = ["recording"] },
 ]
 test = [
     { name = "pytest" },
@@ -929,14 +947,14 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "geo-kin-core", extras = ["fallback"], marker = "extra == 'runtime'", editable = "external/geo_kin_core" },
+    { name = "eurola-geo-kin-core", extras = ["fallback"], marker = "extra == 'runtime'", specifier = "==0.1.2" },
+    { name = "eurola-xrt-devices", extras = ["recording"], marker = "extra == 'runtime'", specifier = "==0.1.2" },
     { name = "h5py", marker = "extra == 'runtime'", specifier = ">=3.11" },
     { name = "msgpack-numpy", marker = "extra == 'policy'", specifier = ">=0.4.8" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8" },
     { name = "pyyaml", specifier = ">=6" },
     { name = "rby1-teleop", marker = "extra == 'runtime'", editable = "external/rby1_teleop" },
     { name = "websockets", marker = "extra == 'policy'", specifier = ">=14" },
-    { name = "xrt-devices", extras = ["recording"], marker = "extra == 'runtime'", editable = "external/XRT_devices" },
 ]
 
 [[package]]
@@ -1053,36 +1071,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/37/c3/48e2c03d2bd79bb45948841c592d24156312dd5f58cdf8f549febe652fb6/websockets-16.1.1-pp311-pypy311_pp73-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b6b9dadbef0cccd9f4c4ee96b08898afa73e26803bbe0f6aeb5bb12b0074206d", size = 179190 },
     { url = "https://files.pythonhosted.org/packages/2d/3f/73e511ecf2496ceac57dd4ed8388efe2bcf0769338a2dbf242c8366ae87e/websockets-16.1.1-pp311-pypy311_pp73-win_amd64.whl", hash = "sha256:56cd5fc4f10a9ea8aa0804bddb7b42506cf9e136046f3b4c27de8fec9e2ecba5", size = 180330 },
     { url = "https://files.pythonhosted.org/packages/be/4d/2d0d67834092e354d2b0498f014a41249a89556bc406cf86f3e1557bb463/websockets-16.1.1-py3-none-any.whl", hash = "sha256:6abbd3e82c731c8e531714466acd5d87b5e88ac3243465337ba71d68e23ae7e3", size = 173814 },
-]
-
-[[package]]
-name = "xrt-devices"
-version = "0.1.0"
-source = { editable = "external/XRT_devices" }
-dependencies = [
-    { name = "numpy" },
-    { name = "scipy" },
-]
-
-[package.optional-dependencies]
-recording = [
-    { name = "pandas" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "aiortc", marker = "extra == 'xr'", specifier = ">=1.9,<2" },
-    { name = "build", marker = "extra == 'test'" },
-    { name = "fastapi", marker = "extra == 'xr'", specifier = ">=0.110,<1" },
-    { name = "httpx", marker = "extra == 'test'", specifier = ">=0.27" },
-    { name = "loguru", marker = "extra == 'xr'", specifier = ">=0.7,<1" },
-    { name = "mediapipe", marker = "extra == 'mediapipe'", specifier = ">=0.10.20,<0.11" },
-    { name = "numpy", specifier = ">=1.24" },
-    { name = "opencv-contrib-python", marker = "extra == 'mediapipe'", specifier = ">=4.8,<5" },
-    { name = "pandas", marker = "extra == 'recording'", specifier = ">=2,<3" },
-    { name = "pytest", marker = "extra == 'test'", specifier = ">=8" },
-    { name = "scipy", specifier = ">=1.10" },
-    { name = "uvicorn", marker = "extra == 'xr'", specifier = ">=0.29,<1" },
 ]
 
 [[package]]
