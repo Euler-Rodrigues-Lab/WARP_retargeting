@@ -1,0 +1,27 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+dist/
+build/
+
+# Generated experiment data. No broad exception: fixtures must be allowlisted.
+*.hdf5
+*.h5
+*.csv
+*.csv.gz
+*.mp4
+*.mov
+*.png
+*.jpg
+*.npz
+outputs/
+artifacts/
+results/
+
+# One frozen paper fixture, in raw SEED and solver-neutral cache forms.
+!fixtures/seed/washing_dishes_R_004__A299.csv.gz
+!fixtures/seed/washing_dishes_R_004__A299.frames.npz
+!fixtures/retargeted/
+!fixtures/retargeted/*.hdf5

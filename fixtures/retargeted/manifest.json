@@ -1,0 +1,33 @@
+{
+  "schema": "warp.precomputed-retargeting/1",
+  "source": "fixtures/seed/washing_dishes_R_004__A299.frames.npz",
+  "source_sha256": "21d70f3c55ac48e4280a34dffde512338bd619e9f17f99579e408ff4986b463d",
+  "frames": 420,
+  "fps": 30.0,
+  "generator": {
+    "geo_kin": "9dbd4ed",
+    "geo_kin_core": "79f6c4f47e25c8dd92ad50a3b1b08c9fe6224aaf"
+  },
+  "artifacts": {
+    "c_sew": {
+      "file": "washing_dishes_c_sew.hdf5",
+      "sha256": "008fe26fae1ed4d142bfc99492bdc5e1f182b008f5c79f2859b1f51e6932fe41"
+    },
+    "warp": {
+      "file": "washing_dishes_warp.hdf5",
+      "sha256": "c760563e6fbf5dd7460d2aaa26a5ff3459db64cc239784adf31328dea654cc57"
+    },
+    "warp_no_joint_limits": {
+      "file": "washing_dishes_warp_no_joint_limits.hdf5",
+      "sha256": "806d1df602b71c2326d50181eb7fc5875e56860fce735d6e34c845010cfdbb13"
+    },
+    "warp_no_spring": {
+      "file": "washing_dishes_warp_no_spring.hdf5",
+      "sha256": "fedf7846ee87f99a9a202540dce11f877660de59ff3144cbc5abbf908ee96c03"
+    },
+    "sew_mimic": {
+      "file": "washing_dishes_sew_mimic.hdf5",
+      "sha256": "d34c4e79c0bdabb8f332ffc7ab02443a99fa8b8f278e838404de64e125de30f7"
+    }
+  }
+}
