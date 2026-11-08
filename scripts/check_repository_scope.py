@@ -80,7 +80,7 @@ def validate() -> list[str]:
                     errors.append(f"forbidden code marker {marker!r}: {rel}")
 
     if has_commits():
-        authors = {line for line in git("log", "--format=%an").splitlines() if line}
+        authors = {line for line in git("log", "--format=%aN").splitlines() if line}
         bodies = git("log", "--format=%B")
     else:
         authors = set()  # Empty repository before its first commit.
