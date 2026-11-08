@@ -14,7 +14,7 @@ motion while aligning the robot's hands, coordinating the torso, and moving
 the base when needed. The resulting trajectories support open-loop replay and
 policy learning without collecting robot teleoperation demonstrations.
 
-The method combines a closed-form Shoulder–Elbow–Wrist solver (c-SEW), adaptive
+The method combines a constrained Shoulder–Elbow–Wrist solver (c-SEW), adaptive
 body alignment, and lazy mobile-base control. Visit the project website for
 videos, method illustrations, and simulation and real-world results.
 
